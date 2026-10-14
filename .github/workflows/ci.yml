@@ -34,13 +34,7 @@ jobs:
         run: cmake --build build
 
       - name: Run tests
-        run: |
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            ./build/Debug/dataconv_tests.exe
-          else
-            ./build/dataconv_tests
-          fi
-        shell: bash
+        run: ctest --test-dir build --output-on-failure
 
       - name: Upload test results
         if: always()
