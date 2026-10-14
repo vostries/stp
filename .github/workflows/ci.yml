@@ -34,7 +34,13 @@ jobs:
         run: cmake --build build
 
       - name: Run tests
-        run: ctest --test-dir build --output-on-failure
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            ctest --test-dir build -C Debug --output-on-failure
+          else
+            ctest --test-dir build --output-on-failure
+          fi
+        shell: bash
 
       - name: Upload test results
         if: always()
